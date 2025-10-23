@@ -4,7 +4,7 @@ registerSketch('sk3', function (p) {
 
   //setup shot and game clock ms
   let shotClockMs = 24000;
-  
+  const shotClockStandard = 24000; // the "standard" shot time, aka what the shot clock gets reset to when it hits 0
   const gameClockMs = 720000;
   let timeElapsed;
   let shotClockBeginMs = 0;
@@ -32,8 +32,9 @@ registerSketch('sk3', function (p) {
     // step 1. Draw the shot clock board
     p.strokeWeight(5);
     p.stroke(255);
-    
-    
+    if (ssShot == 0){
+      p.stroke('red');
+    }
     p.fill(0, 0, 0);
     p.rectMode(p.CENTER);
     p.rect(middleWidth, middleHeight, 500, 500);
@@ -62,7 +63,7 @@ registerSketch('sk3', function (p) {
     
     //shotclock reset logic
     if (shotClockMs - timeElapsed <= -1000){
-      shotClockMs += 25000;
+      shotClockMs += shotClockStandard + 1000;
     }
     
     
