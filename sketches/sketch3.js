@@ -3,7 +3,8 @@ registerSketch('sk3', function (p) {
   let clockFont; // font 
 
   //setup shot and game clock ms
-  const shotClockMs = 24000;
+  let shotClockMs = 24000;
+  
   const gameClockMs = 720000;
   let timeElapsed;
   let shotClockBeginMs = 0;
@@ -18,8 +19,7 @@ registerSketch('sk3', function (p) {
   //rgba(39, 39, 39, 1)
   p.draw = function () {
     timeElapsed = p.millis(); 
-    shotClockBeginMs = timeElapsed;
-    //timeElapsedShotClock = p.millis();
+
 
 
     p.background(78, 78 ,78);
@@ -32,6 +32,8 @@ registerSketch('sk3', function (p) {
     // step 1. Draw the shot clock board
     p.strokeWeight(5);
     p.stroke(255);
+    
+    
     p.fill(0, 0, 0);
     p.rectMode(p.CENTER);
     p.rect(middleWidth, middleHeight, 500, 500);
@@ -57,6 +59,12 @@ registerSketch('sk3', function (p) {
     p.text("00", middleWidth, middleHeight + 45); //outline
     p.fill('red');
     p.text(ssShot, middleWidth, middleHeight + 45);
+    
+    //shotclock reset logic
+    if (shotClockMs - timeElapsed <= -1000){
+      shotClockMs += 25000;
+    }
+    
     
   
   };
