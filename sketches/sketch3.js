@@ -31,15 +31,22 @@ registerSketch('sk3', function (p) {
     // step 1. Draw the shot clock board
     p.strokeWeight(5);
     p.stroke(255);
+    p.push();
     if (ssShot == 0){
+      
+      p.drawingContext.shadowBlur = 50;
+      p.drawingContext.shadowColor = 'red';
       p.stroke('red');
     }
     p.fill(0, 0, 0);
     p.rectMode(p.CENTER);
     p.rect(middleWidth, middleHeight, 500, 500);
+    p.pop();
     
     // step 2. Draw the game time at the top of the board
       //2a. add "outline"
+    
+    
     
     p.textAlign(p.CENTER, p.CENTER); // center all following text
     p.noStroke(); // no stroke for texts
@@ -48,8 +55,13 @@ registerSketch('sk3', function (p) {
     p.textSize(185)
     p.fill(39, 39, 39);
     p.text("00:00", middleWidth, middleHeight-180); //outline
+
+    p.push(); 
     p.fill(255,191,0);
+    p.drawingContext.shadowBlur = 80;
+    p.drawingContext.shadowColor = "rgb(255,191,0)";
     p.text(mm + ":" + ss, middleWidth, middleHeight-180);
+    p.pop(); // push and pop to restrict glow to text
 
     //step 3. draw the shot clock
       //step 3a. Add "outline"
@@ -57,13 +69,17 @@ registerSketch('sk3', function (p) {
     p.fill(39, 39, 39);
     p.textSize(380);
     p.text("00", middleWidth, middleHeight + 45); //outline
+    
     p.fill('red');
-
+    p.push();
+    p.drawingContext.shadowBlur = 80;
+    p.drawingContext.shadowColor = 'red';
     // shot clock dissapears when game clock is <= shot clock time
     if (gameClockMs - timeElapsed >= shotClockStandard){
       p.text(ssShot, middleWidth, middleHeight + 45);
     }
-    
+    p.pop(); // push and pop to restrict glow
+
     //shotclock reset after "00" logic
     if (shotClockMs - timeElapsed <= -1000){
       shotClockMs += shotClockStandard + 1000;
