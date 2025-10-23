@@ -18,9 +18,6 @@ registerSketch('sk3', function (p) {
   //rgba(39, 39, 39, 1)
   p.draw = function () {
     timeElapsed = p.millis(); 
-
-
-
     p.background(78, 78 ,78);
 
     const middleWidth = p.windowWidth/2;
@@ -28,12 +25,18 @@ registerSketch('sk3', function (p) {
     const { mm, ss } = msToMMSS(gameClockMs - timeElapsed);
     const { mm: mmShot, ss: ssShot } = msToMMSS(shotClockMs - timeElapsed);
 
+    p.textAlign(p.CENTER, p.CENTER); // center all following text
+
     // step 1. Draw the shot clock board
     p.strokeWeight(5);
     p.stroke(255);
     p.push();
     if (ssShot == 0){
-      
+      p.drawingContext.shadowBlur = 50;
+      p.drawingContext.shadowColor = "rgba(255, 204, 0, 1)";
+      p.stroke(255, 204, 0);
+    }
+    if (ss == 0){
       p.drawingContext.shadowBlur = 50;
       p.drawingContext.shadowColor = 'red';
       p.stroke('red');
@@ -45,22 +48,18 @@ registerSketch('sk3', function (p) {
     
     // step 2. Draw the game time at the top of the board
       //2a. add "outline"
-    
-    
-    
-    p.textAlign(p.CENTER, p.CENTER); // center all following text
     p.noStroke(); // no stroke for texts
     p.textFont(clockFont); //set text font to clockFont
 
-    p.textSize(185)
+    p.textSize(180)
     p.fill(39, 39, 39);
-    p.text("00:00", middleWidth, middleHeight-180); //outline
+    p.text("00:00", middleWidth, middleHeight-165); //outline
 
     p.push(); 
     p.fill(255,191,0);
-    p.drawingContext.shadowBlur = 80;
+    p.drawingContext.shadowBlur = 65;
     p.drawingContext.shadowColor = "rgb(255,191,0)";
-    p.text(mm + ":" + ss, middleWidth, middleHeight-180);
+    p.text(mm + ":" + ss, middleWidth, middleHeight-165);
     p.pop(); // push and pop to restrict glow to text
 
     //step 3. draw the shot clock
@@ -72,7 +71,7 @@ registerSketch('sk3', function (p) {
     
     p.fill('red');
     p.push();
-    p.drawingContext.shadowBlur = 80;
+    p.drawingContext.shadowBlur = 65;
     p.drawingContext.shadowColor = 'red';
     // shot clock dissapears when game clock is <= shot clock time
     if (gameClockMs - timeElapsed >= shotClockStandard){
@@ -84,6 +83,7 @@ registerSketch('sk3', function (p) {
     if (shotClockMs - timeElapsed <= -1000){
       shotClockMs += shotClockStandard + 1000;
     }
+    
     
     
   

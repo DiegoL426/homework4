@@ -9,6 +9,8 @@ registerSketch('sk4', function (p) {
     p.textSize(32);
     p.textAlign(p.CENTER, p.CENTER);
     p.text('HWK #4. C', p.width / 2, p.height / 2);
+
+    
   };
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
 });
