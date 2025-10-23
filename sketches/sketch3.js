@@ -4,34 +4,41 @@ registerSketch('sk3', function (p) {
     p.createCanvas(p.windowWidth, p.windowHeight);
   };
 
-  //rgba(0, 0, 0, 1)
+  //rgba(43, 43, 43, 1)
   p.draw = function () {
-    p.background(255);
+    p.background(78, 78 ,78);
     const middleWidth = p.windowWidth/2;
     const middleHeight = p.windowHeight/2;
 
 
     // step 1. Draw the shot clock board
-    p.stroke(0, 0, 0);
+    p.strokeWeight(5);
+    p.stroke(255);
     p.fill(0, 0, 0);
     p.rectMode(p.CENTER);
     p.rect(middleWidth, middleHeight, 500, 500);
     
     // step 2. Draw the game time at the top of the board
+
+      //2a. add "outline"
+    p.textSize(140)
+    p.noStroke()
+    p.fill(43, 43, 43);
+    p.text("00:00", middleWidth, middleHeight-160);
+
     p.textAlign(p.CENTER, p.CENTER);
     p.textSize(140);
     p.fill(255,191,0);
-    p.noStroke();
-    p.text("12:00", middleWidth, middleHeight - 180);
-
-    //step 2a. Draw the outline of 00:00's (wip)
-    //p.fill()
-    //p.text("00:00")
+    p.text("12:00", middleWidth, middleHeight - 160);
 
     //step 3. draw the shot clock
+      //step 3a. Add "outline"
+    
+    p.fill(43, 43, 43);
     p.textSize(300);
+    p.text("00", middleWidth, middleHeight + 80);
     p.fill('red');
-    p.text("24", middleWidth, middleHeight + 50);
+    p.text("24", middleWidth, middleHeight + 80);
     
   
   };
