@@ -1,10 +1,14 @@
 // Instance-mode sketch for tab 3
 registerSketch('sk3', function (p) {
+  let clockFont;
+  p.preload = function() {
+    clockFont = p.loadFont('../fonts/NBAGameClock.ttf');
+  }
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
-  };
+  }
 
-  //rgba(43, 43, 43, 1)
+  //rgba(39, 39, 39, 1)
   p.draw = function () {
     p.background(78, 78 ,78);
     const middleWidth = p.windowWidth/2;
@@ -20,25 +24,26 @@ registerSketch('sk3', function (p) {
     
     // step 2. Draw the game time at the top of the board
       //2a. add "outline"
-      
-    p.textSize(140)
+
+    p.textFont(clockFont);
+
+    p.textSize(185)
     p.noStroke()
-    p.fill(43, 43, 43);
-    p.text("00:00", middleWidth, middleHeight-160);
+    p.fill(39, 39, 39);
+    p.text("00:00", middleWidth, middleHeight-180);
 
     p.textAlign(p.CENTER, p.CENTER);
-    p.textSize(140);
     p.fill(255,191,0);
-    p.text("12:00", middleWidth, middleHeight - 160);
+    p.text("12:00", middleWidth, middleHeight - 180);
 
     //step 3. draw the shot clock
       //step 3a. Add "outline"
     
-    p.fill(43, 43, 43);
-    p.textSize(300);
-    p.text("00", middleWidth, middleHeight + 80);
+    p.fill(39, 39, 39);
+    p.textSize(380);
+    p.text("00", middleWidth, middleHeight + 45);
     p.fill('red');
-    p.text("24", middleWidth, middleHeight + 80);
+    p.text("24", middleWidth, middleHeight + 45);
     
   
   };
