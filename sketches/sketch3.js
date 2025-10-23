@@ -7,7 +7,6 @@ registerSketch('sk3', function (p) {
   const shotClockStandard = 24000; // the "standard" shot time, aka what the shot clock gets reset to when it hits 0
   const gameClockMs = 720000;
   let timeElapsed;
-  let shotClockBeginMs = 0;
 
   p.preload = function() {
     clockFont = p.loadFont('../fonts/NBAGameClock.ttf'); // preload font
