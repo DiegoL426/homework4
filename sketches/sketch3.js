@@ -5,24 +5,26 @@ registerSketch('sk3', function (p) {
   //setup shot and game clock ms
   const shotClockMs = 24000;
   const gameClockMs = 720000;
+  let timeElapsed;
 
   p.preload = function() {
     clockFont = p.loadFont('../fonts/NBAGameClock.ttf'); // preload font
   }
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
+    //timeElapsed = p.millis(); 
   }
 
   //rgba(39, 39, 39, 1)
   p.draw = function () {
+    timeElapsed = p.millis(); 
+
     p.background(78, 78 ,78);
+
     const middleWidth = p.windowWidth/2;
     const middleHeight = p.windowHeight/2;
-
-    const durMs = p.millis();
-
-    const { mm, ss } = msToMMSS(gameClockMs);
-    const { mm: mmShot, ss: ssShot } = msToMMSS(shotClockMs);
+    const { mm, ss } = msToMMSS(gameClockMs - timeElapsed);
+    const { mm: mmShot, ss: ssShot } = msToMMSS(shotClockMs - timeElapsed);
 
     // step 1. Draw the shot clock board
     p.strokeWeight(5);
@@ -51,12 +53,13 @@ registerSketch('sk3', function (p) {
     p.textSize(380);
     p.text("00", middleWidth, middleHeight + 45); //outline
     p.fill('red');
-    //p.text("24", middleWidth, middleHeight + 45);
     p.text(ssShot, middleWidth, middleHeight + 45);
     
   
   };
 
+  // this function takes in some milliseconds, and returns the MINUTES and SECONDS associated with it.
+  // Credit: msToMMSS function from example 8
   function msToMMSS(ms) {
     const total = p.max(0, p.round(ms / 1000));
     const m = p.floor(total / 60);
