@@ -5,7 +5,7 @@ registerSketch('sk3', function (p) {
   //setup shot and game clock ms
   let shotClockMs = 24000;
   const shotClockStandard = 24000; // the "standard" shot time, aka what the shot clock gets reset to when it hits 0
-  const gameClockMs = 720000;
+  const gameClockMs = 26000;
   let timeElapsed;
 
   p.preload = function() {
@@ -29,14 +29,16 @@ registerSketch('sk3', function (p) {
 
     // step 1. Draw the shot clock board
     p.strokeWeight(5);
-    p.stroke(255);
+    p.stroke(230);
     p.push();
+    // flash yellow when shot clock is 0
     if (ssShot == 0){
       p.drawingContext.shadowBlur = 50;
       p.drawingContext.shadowColor = "rgba(255, 204, 0, 1)";
       p.stroke(255, 204, 0);
     }
-    if (ss == 0){
+    // flash red when quarter is over (game clock is 0)
+    if (mm == 0 && ss == 0){
       p.drawingContext.shadowBlur = 50;
       p.drawingContext.shadowColor = 'red';
       p.stroke('red');
@@ -53,7 +55,7 @@ registerSketch('sk3', function (p) {
 
     p.textSize(180)
     p.fill(39, 39, 39);
-    p.text("00:00", middleWidth, middleHeight-165); //outline
+    p.text("88:88", middleWidth, middleHeight-165); //outline
 
     p.push(); 
     p.fill(255,191,0);
@@ -67,7 +69,7 @@ registerSketch('sk3', function (p) {
     
     p.fill(39, 39, 39);
     p.textSize(380);
-    p.text("00", middleWidth, middleHeight + 45); //outline
+    p.text("88", middleWidth, middleHeight + 45); //outline
     
     p.fill('red');
     p.push();
@@ -83,10 +85,6 @@ registerSketch('sk3', function (p) {
     if (shotClockMs - timeElapsed <= -1000){
       shotClockMs += shotClockStandard + 1000;
     }
-    
-    
-    
-  
   };
 
   // this function takes in some milliseconds, and returns the MINUTES and SECONDS associated with it.
