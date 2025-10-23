@@ -19,8 +19,8 @@ registerSketch('sk3', function (p) {
     p.rect(middleWidth, middleHeight, 500, 500);
     
     // step 2. Draw the game time at the top of the board
-
       //2a. add "outline"
+      
     p.textSize(140)
     p.noStroke()
     p.fill(43, 43, 43);
