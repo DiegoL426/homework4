@@ -58,7 +58,9 @@ registerSketch('sk3', function (p) {
     p.textSize(380);
     p.text("00", middleWidth, middleHeight + 45); //outline
     p.fill('red');
-    p.text(ssShot, middleWidth, middleHeight + 45);
+    if (gameClockMs - timeElapsed >= shotClockStandard){
+      p.text(ssShot, middleWidth, middleHeight + 45);
+    }
     
     //shotclock reset logic
     if (shotClockMs - timeElapsed <= -1000){
