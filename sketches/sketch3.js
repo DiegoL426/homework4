@@ -6,18 +6,21 @@ registerSketch('sk3', function (p) {
   const shotClockMs = 24000;
   const gameClockMs = 720000;
   let timeElapsed;
+  let shotClockBeginMs = 0;
 
   p.preload = function() {
     clockFont = p.loadFont('../fonts/NBAGameClock.ttf'); // preload font
   }
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
-    //timeElapsed = p.millis(); 
   }
 
   //rgba(39, 39, 39, 1)
   p.draw = function () {
     timeElapsed = p.millis(); 
+    shotClockBeginMs = timeElapsed;
+    //timeElapsedShotClock = p.millis();
+
 
     p.background(78, 78 ,78);
 
