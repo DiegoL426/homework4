@@ -9,7 +9,7 @@ registerSketch('sk3', function (p) {
   let timeElapsed;
 
   p.preload = function() {
-    clockFont = p.loadFont('../fonts/NBAGameClock.ttf'); // preload font
+    clockFont = p.loadFont('fonts/NBAGameClock.ttf'); // preload font
   }
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
