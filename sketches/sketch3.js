@@ -1,8 +1,13 @@
 // Instance-mode sketch for tab 3
 registerSketch('sk3', function (p) {
-  let clockFont;
+  let clockFont; // font 
+
+  //setup shot and game clock ms
+  const shotClockMs = 24000;
+  const gameClockMs = 720000;
+
   p.preload = function() {
-    clockFont = p.loadFont('../fonts/NBAGameClock.ttf');
+    clockFont = p.loadFont('../fonts/NBAGameClock.ttf'); // preload font
   }
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
@@ -14,6 +19,10 @@ registerSketch('sk3', function (p) {
     const middleWidth = p.windowWidth/2;
     const middleHeight = p.windowHeight/2;
 
+    const durMs = p.millis();
+
+    const { mm, ss } = msToMMSS(gameClockMs);
+    const { mm: mmShot, ss: ssShot } = msToMMSS(shotClockMs);
 
     // step 1. Draw the shot clock board
     p.strokeWeight(5);
@@ -24,29 +33,36 @@ registerSketch('sk3', function (p) {
     
     // step 2. Draw the game time at the top of the board
       //2a. add "outline"
-
-    p.textFont(clockFont);
+    
+    p.textAlign(p.CENTER, p.CENTER); // center all following text
+    p.noStroke(); // no stroke for texts
+    p.textFont(clockFont); //set text font to clockFont
 
     p.textSize(185)
-    p.noStroke()
     p.fill(39, 39, 39);
-    p.text("00:00", middleWidth, middleHeight-180);
-
-    p.textAlign(p.CENTER, p.CENTER);
+    p.text("00:00", middleWidth, middleHeight-180); //outline
     p.fill(255,191,0);
-    p.text("12:00", middleWidth, middleHeight - 180);
+    p.text(mm + ":" + ss, middleWidth, middleHeight-180);
 
     //step 3. draw the shot clock
       //step 3a. Add "outline"
     
     p.fill(39, 39, 39);
     p.textSize(380);
-    p.text("00", middleWidth, middleHeight + 45);
+    p.text("00", middleWidth, middleHeight + 45); //outline
     p.fill('red');
-    p.text("24", middleWidth, middleHeight + 45);
+    //p.text("24", middleWidth, middleHeight + 45);
+    p.text(ssShot, middleWidth, middleHeight + 45);
     
   
   };
+
+  function msToMMSS(ms) {
+    const total = p.max(0, p.round(ms / 1000));
+    const m = p.floor(total / 60);
+    const s = total % 60;
+    return { mm: p.nf(m, 2), ss: p.nf(s, 2) };
+  }
 
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
 });
