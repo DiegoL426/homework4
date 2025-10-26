@@ -4,8 +4,8 @@ registerSketch('sk3', function (p) {
 
   //setup shot and game clock ms
   let shotClockMs = 24000;
-  const shotClockStandard = 24000; // the "standard" shot time, aka what the shot clock gets reset to when it hits 0
-  const gameClockMs = 26000;
+  const shotClockStandard = shotClockMs; // the "standard" shot time, aka what the shot clock gets reset to when it hits 0
+  const gameClockMs = 720000;
   let timeElapsed;
 
   p.preload = function() {
@@ -81,9 +81,15 @@ registerSketch('sk3', function (p) {
     }
     p.pop(); // push and pop to restrict glow
 
+    //step 4. shot clock reset instructions
+    p.fill('black');
+    p.textFont('monospace');
+    p.textSize(30);
+    p.text("Press SPACE to reset shot clock", middleWidth, middleHeight + 300);
+
     //shotclock reset after "00" logic
     if (shotClockMs - timeElapsed <= -1000){
-      shotClockMs += shotClockStandard + 1000;
+      shotClockMs = timeElapsed + shotClockStandard;
     }
   };
 
@@ -94,6 +100,13 @@ registerSketch('sk3', function (p) {
     const m = p.floor(total / 60);
     const s = total % 60;
     return { mm: p.nf(m, 2), ss: p.nf(s, 2) };
+  }
+
+  // spacebar resets the shot clock (when a team scores)
+  p.keyPressed = function() {
+    if (p.key === ' '){
+      shotClockMs = timeElapsed + shotClockStandard;
+    }
   }
 
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
