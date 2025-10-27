@@ -3,6 +3,7 @@ registerSketch('sk2', function (p) {
 
   let roundTimeMs = 300000;
   let timeElapsed;
+  let roundStartTime = 0;
   let round = 1;
 
   //display constants
@@ -35,21 +36,25 @@ registerSketch('sk2', function (p) {
     const middleHeight = p.windowHeight/2;
 
     //STEP 1. dark gray middle graphic w/ time and logo-----------------
+
+    
+
     p.fill(37, 37, 37);
+
     // I split the square into 2 polygons to create a cool diagonal split down the middle
     //left half
     p.beginShape();
-    p.vertex(middleWidth - 500/2, middleHeight - 90/2); // top-left
-    p.vertex(middleWidth - 20, middleHeight - 90/2);       // top right
-    p.vertex(middleWidth - 50, middleHeight + 90/2);       // bottom right
-    p.vertex(middleWidth - 500/2, middleHeight + 90/2); // bottom-left
+    p.vertex(middleWidth - 250, middleHeight - 45); // top-left
+    p.vertex(middleWidth - 20, middleHeight - 45);       // top right
+    p.vertex(middleWidth - 50, middleHeight + 45);       // bottom right
+    p.vertex(middleWidth - 250, middleHeight + 45); // bottom-left
     p.endShape(p.CLOSE);
     //right half
     p.beginShape();
-    p.vertex(middleWidth + 500/2, middleHeight - 90/2); // top right
-    p.vertex(middleWidth + 10, middleHeight - 90/2); // top left
-    p.vertex(middleWidth - 20, middleHeight + 90/2); // bottom left
-    p.vertex(middleWidth + 500/2, middleHeight + 90/2); //bottom right
+    p.vertex(middleWidth + 250, middleHeight - 45); // top right
+    p.vertex(middleWidth + 10, middleHeight - 45); // top left
+    p.vertex(middleWidth - 20, middleHeight + 45); // bottom left
+    p.vertex(middleWidth + 250, middleHeight + 45); //bottom right
     p.endShape(p.CLOSE);
     
     // "AFC" logo (my fake MMA promotion)
@@ -61,7 +66,10 @@ registerSketch('sk2', function (p) {
     // Time ticker
     p.textFont(tickerFont); 
     p.push();
-    const { mm, ss } = msToMMSS(roundTimeMs - timeElapsed);
+    if (round > 3){
+      roundTimeMs = 0;
+    }
+    let { mm, ss } = msToMMSS(roundTimeMs - (timeElapsed - roundStartTime));
     p.textSize(70);
     p.fill(238, 238, 238);
     p.text(mm + ":" + ss, middleWidth + 120, middleHeight - 8 );
@@ -88,6 +96,7 @@ registerSketch('sk2', function (p) {
 
     //STEP 3. Bars that fill up per round (the hard part)----------------
 
+    //gray overlay ("empty bars");
     p.push()
     p.fill(250, 250, 250, 190);
     p.rect(middleWidth - 500, middleHeight - 80, roundBarWidth, 30);
@@ -95,30 +104,46 @@ registerSketch('sk2', function (p) {
     p.rect(middleWidth, middleHeight - 80, roundBarWidth, 30);
     p.pop();
     
-    // round text over bars depending on what round it is
+    // styling for round text over bars depending on what round it is
     p.textSize(30);
+
     p.fill(231, 189, 1);
-    let barProgress = timeElapsed/roundTimeMs;
+    let barProgress = (timeElapsed - roundStartTime)/roundTimeMs;
     p.rectMode(p.CORNER);
     p.textFont(tickerFontItalics);
+    
+
+    // bar fills and text appears depending on the round
+    // NOTE: THERE'S PROBABLY A WAY BETTER WAY TO DO THIS, BUT IT'S 1 AM...
     if (round == 1){
       p.text("Round 1", middleWidth - 500, middleHeight - 120);
       p.rect((middleWidth - 500) - roundBarWidth/2, middleHeight - 95, roundBarWidth * barProgress, 30);
     } else if (round == 2){
+      p.rect((middleWidth - 500) - roundBarWidth/2, middleHeight - 95, roundBarWidth, 30); // fill previous bar
+
       p.text("Round 2", middleWidth, middleHeight - 120);
-      p.rect(middleWidth, middleHeight - 80, 400, 30);
-    } else {
-      p.rect(middleWidth + 500, middleHeight - 80, roundBarWidth, 30);
+      p.rect(middleWidth - roundBarWidth/2, middleHeight - 95, roundBarWidth * barProgress, 30);
+    } else if (round == 3){
+      //fill previous 2 bars
+      p.rect((middleWidth - 500) - roundBarWidth/2, middleHeight - 95, roundBarWidth, 30);
+      p.rect(middleWidth - roundBarWidth/2, middleHeight - 95, roundBarWidth, 30); 
+
+      p.rect((middleWidth + 500) - roundBarWidth/2, middleHeight - 95, roundBarWidth * barProgress, 30);
       p.text("Round 3", middleWidth + 500, middleHeight - 120);
+    } else {
+      //fill all 3 bars
+      p.rect((middleWidth - 500) - roundBarWidth/2, middleHeight - 95, roundBarWidth, 30);
+      p.rect(middleWidth - roundBarWidth/2, middleHeight - 95, roundBarWidth, 30); 
+      p.rect((middleWidth + 500) - roundBarWidth/2, middleHeight - 95, roundBarWidth, 30);
     }
 
-    barProgress = timeElapsed / roundTimeMs;
+    //move on to the next round
+    if (timeElapsed - roundStartTime >= roundTimeMs){
+      roundStartTime = timeElapsed;
+      round++;
+    }
     
-
-
   };
-
-  //Styling functions
 
   function msToMMSS(ms) {
     const total = p.max(0, p.round(ms / 1000));
