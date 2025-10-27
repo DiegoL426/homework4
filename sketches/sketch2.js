@@ -17,7 +17,7 @@ registerSketch('sk2', function (p) {
     logoFont = p.loadFont('fonts/sternbach.otf'); // preload font
     tickerFont = p.loadFont('fonts/Tomorrow-Regular.ttf');
     tickerFontItalics = p.loadFont('fonts/Tomorrow-SemiBoldItalic.ttf');
-    bgImage = p.loadImage('backgrounds/gaethjeKhabib.png');
+    bgImage = p.loadImage('custom_images/gaethjeKhabib.png');
   }
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
@@ -91,11 +91,11 @@ registerSketch('sk2', function (p) {
     p.text(fighter1Surname, middleWidth - 500, middleHeight - 5);
     p.text(fighter2Surname, middleWidth + 500, middleHeight - 5)
       //step 2a. Add fight description at bottom of ticker while we're at it
-    // p.fill(37, 37, 37, 150)
-    // p.rect(middleWidth, middleHeight + 80, 500, 30)
-    // p.textSize(25);
-    // p.fill(250);
-    // p.text(fightTitle, middleWidth, middleHeight + 77)
+    p.fill(37, 37, 37, 150)
+    p.rect(middleWidth, middleHeight + 80, 500, 30)
+    p.textSize(25);
+    p.fill(250);
+    p.text(fightTitle, middleWidth, middleHeight + 77)
 
     //STEP 3. Bars that fill up per round (the hard part)----------------
 
