@@ -1,6 +1,11 @@
 // Instance-mode sketch for tab 2
 registerSketch('sk2', function (p) {
 
+
+  let roundTimeMs = 300000;
+  let timeElapsed;
+
+
   p.preload = function(){
     mmaFont = p.loadFont('fonts/sternbach.otf'); // preload font
   }
@@ -13,6 +18,8 @@ registerSketch('sk2', function (p) {
 
   //rgba(238, 238, 238, 1)
   p.draw = function () {
+    timeElapsed = p.millis();
+
     p.background(220);
 
     p.textAlign(p.CENTER, p.CENTER); // center align all text
@@ -50,12 +57,21 @@ registerSketch('sk2', function (p) {
     p.fill(231, 189, 1);
     p.text("AFC", middleWidth - 150, middleHeight - 10);
 
-    // time (static for now)
+    // 5 minute round ticker 
+    const { mm, ss } = msToMMSS(roundTimeMs - timeElapsed);
     p.textSize(80);
     p.textFont('monospace');
     p.fill(238, 238, 238);
     //p.textStyle(p.BOLD)
-    p.text("5:00", middleWidth + 120, middleHeight + 5);
+    p.text(mm + ":" + ss, middleWidth + 120, middleHeight + 5);
   };
+
+  function msToMMSS(ms) {
+    const total = p.max(0, p.round(ms / 1000));
+    const m = p.floor(total / 60);
+    const s = total % 60;
+    return { mm: p.nf(m, 2), ss: p.nf(s, 2) };
+  }
+
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
 });
