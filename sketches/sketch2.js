@@ -9,8 +9,6 @@ registerSketch('sk2', function (p) {
   //display constants
   const fighter1Surname = "NURMAGOMEDOV";
   const fighter2Surname = "GAETHJE";
-  const fighter1Color = 'red';
-  const fighter2Color = 'blue';
   const fightTitle = 'LIGHTWEIGHT BOUT';
 
   const roundBarWidth = 400; //used in step 3 for logic and drawing
