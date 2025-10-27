@@ -37,9 +37,15 @@ registerSketch('sk2', function (p) {
 
     //STEP 1. dark gray middle graphic w/ time and logo-----------------
 
-    
+    let gradient = p.drawingContext.createLinearGradient(
+      middleWidth, middleHeight - 45,
+      middleWidth, middleHeight + 45  
+    );
 
-    p.fill(37, 37, 37);
+    gradient.addColorStop(0, 'rgb(37, 37, 37)')
+    gradient.addColorStop(1, 'rgba(107, 91, 0, 1)');
+
+    p.drawingContext.fillStyle = gradient;
 
     // I split the square into 2 polygons to create a cool diagonal split down the middle
     //left half
