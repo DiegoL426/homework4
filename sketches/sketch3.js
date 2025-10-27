@@ -15,7 +15,6 @@ registerSketch('sk3', function (p) {
     p.createCanvas(p.windowWidth, p.windowHeight);
   }
 
-  //rgba(39, 39, 39, 1)
   p.draw = function () {
     timeElapsed = p.millis(); 
     p.background(78, 78 ,78);
