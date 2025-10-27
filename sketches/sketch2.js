@@ -18,6 +18,7 @@ registerSketch('sk2', function (p) {
   p.preload = function(){
     logoFont = p.loadFont('fonts/sternbach.otf'); // preload font
     tickerFont = p.loadFont('fonts/Tomorrow-Regular.ttf');
+    tickerFontItalics = p.loadFont('fonts/Tomorrow-LightItalic.ttf');
   }
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
@@ -91,19 +92,28 @@ registerSketch('sk2', function (p) {
     p.fill(250, 250, 250, 190);
     p.rect(middleWidth - 500, middleHeight - 80, roundBarWidth, 30);
     p.rect(middleWidth + 500, middleHeight - 80, roundBarWidth, 30);
-    p.rect(middleWidth, middleHeight - 80, 400, 30);
+    p.rect(middleWidth, middleHeight - 80, roundBarWidth, 30);
     p.pop();
     
     // round text over bars depending on what round it is
     p.textSize(30);
     p.fill(231, 189, 1);
+    let barProgress = timeElapsed/roundTimeMs;
+    p.rectMode(p.CORNER);
+    p.textFont(tickerFontItalics);
     if (round == 1){
       p.text("Round 1", middleWidth - 500, middleHeight - 120);
+      p.rect((middleWidth - 500) - roundBarWidth/2, middleHeight - 95, roundBarWidth * barProgress, 30);
     } else if (round == 2){
       p.text("Round 2", middleWidth, middleHeight - 120);
+      p.rect(middleWidth, middleHeight - 80, 400, 30);
     } else {
+      p.rect(middleWidth + 500, middleHeight - 80, roundBarWidth, 30);
       p.text("Round 3", middleWidth + 500, middleHeight - 120);
     }
+
+    barProgress = timeElapsed / roundTimeMs;
+    
 
 
   };
