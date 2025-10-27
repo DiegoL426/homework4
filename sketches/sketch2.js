@@ -9,15 +9,15 @@ registerSketch('sk2', function (p) {
   //display constants
   const fighter1Surname = "NURMAGOMEDOV";
   const fighter2Surname = "GAETHJE";
-  const fightTitle = 'LIGHTWEIGHT BOUT';
+  const fightTitle = 'LIGHTWEIGHT CHAMPIONSHIP';
 
   const roundBarWidth = 400; //used in step 3 for logic and drawing
   
-
   p.preload = function(){
     logoFont = p.loadFont('fonts/sternbach.otf'); // preload font
     tickerFont = p.loadFont('fonts/Tomorrow-Regular.ttf');
-    tickerFontItalics = p.loadFont('fonts/Tomorrow-LightItalic.ttf');
+    tickerFontItalics = p.loadFont('fonts/Tomorrow-SemiBoldItalic.ttf');
+    bgImage = p.loadImage('backgrounds/gaethjeKhabib.png');
   }
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
@@ -26,12 +26,12 @@ registerSketch('sk2', function (p) {
   p.draw = function () {
     timeElapsed = p.millis();
 
-    p.background(220);
+    p.image(bgImage, 0, 0, p.windowWidth, p.windowHeight);
 
     p.textAlign(p.CENTER, p.CENTER); // center align all text
 
     const middleWidth = p.windowWidth/2;
-    const middleHeight = p.windowHeight/2;
+    const middleHeight = p.windowHeight * 2/2.5;
 
     //STEP 1. dark gray middle graphic w/ time and logo-----------------
 
@@ -109,7 +109,7 @@ registerSketch('sk2', function (p) {
     p.pop();
     
     // styling for round text over bars depending on what round it is
-    p.textSize(30);
+    p.textSize(25);
 
     p.fill(231, 189, 1);
     let barProgress = (timeElapsed - roundStartTime)/roundTimeMs;
