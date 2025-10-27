@@ -35,14 +35,13 @@ registerSketch('sk2', function (p) {
 
     //STEP 1. dark gray middle graphic w/ time and logo-----------------
 
+    // cool gradient effect
     let gradient = p.drawingContext.createLinearGradient(
       middleWidth, middleHeight - 45,
       middleWidth, middleHeight + 45  
     );
-
     gradient.addColorStop(0, 'rgb(37, 37, 37)')
     gradient.addColorStop(1, 'rgba(107, 91, 0, 1)');
-
     p.drawingContext.fillStyle = gradient;
 
     // I split the square into 2 polygons to create a cool diagonal split down the middle
@@ -120,7 +119,7 @@ registerSketch('sk2', function (p) {
     // bar fills and text appears depending on the round
     // NOTE: THERE'S PROBABLY A WAY BETTER WAY TO DO THIS, BUT IT'S 1 AM...
     if (round == 1){
-      p.text("Round 1", middleWidth - 500, middleHeight - 120);
+      p.text("ROUND 1", middleWidth - 500, middleHeight - 120);
       p.rect((middleWidth - 500) - roundBarWidth/2, middleHeight - 95, roundBarWidth * barProgress, 30);
     } else if (round == 2){
       p.rect((middleWidth - 500) - roundBarWidth/2, middleHeight - 95, roundBarWidth, 30); // fill previous bar
