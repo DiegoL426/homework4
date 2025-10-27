@@ -1,22 +1,24 @@
 // Instance-mode sketch for tab 2
 registerSketch('sk2', function (p) {
 
-
   let roundTimeMs = 300000;
   let timeElapsed;
 
+  const fighter1Surname = "NURMAGOMEDOV";
+  const fighter2Surname = "GAETHJE";
+  const fighter1Color = 'red';
+  const fighter2Color = 'blue';
+
+  const fightTitle = 'LIGHTWEIGHT BOUT';
 
   p.preload = function(){
-    mmaFont = p.loadFont('fonts/sternbach.otf'); // preload font
+    logoFont = p.loadFont('fonts/sternbach.otf'); // preload font
+    tickerFont = p.loadFont('fonts/Tomorrow-Regular.ttf');
   }
-
-
   p.setup = function () {
     p.createCanvas(p.windowWidth, p.windowHeight);
   };  
-
-
-  //rgba(238, 238, 238, 1)
+  //rgba(22, 22, 22, 1)
   p.draw = function () {
     timeElapsed = p.millis();
 
@@ -27,13 +29,9 @@ registerSketch('sk2', function (p) {
     const middleWidth = p.windowWidth/2;
     const middleHeight = p.windowHeight/2;
 
-    //step 1. middle square in the scorebug w/ time and logo
-
-    // backdrop
-    p.push()
+    //STEP 1. middle rectangle graphic w/ time and logo-----------------
     p.fill(37, 37, 37);
-
-    // I split the square into 2 halves to create a stylistic split down the middle
+    // I split the square into 2 polygons to create a stylistic split down the middle
     //left half
     p.beginShape();
     p.vertex(middleWidth - 500/2, middleHeight - 90/2); // top-left
@@ -41,7 +39,6 @@ registerSketch('sk2', function (p) {
     p.vertex(middleWidth - 50, middleHeight + 90/2);       // bottom right
     p.vertex(middleWidth - 500/2, middleHeight + 90/2); // bottom-left
     p.endShape(p.CLOSE);
-
     //right half
     p.beginShape();
     p.vertex(middleWidth + 500/2, middleHeight - 90/2); // top right
@@ -49,22 +46,49 @@ registerSketch('sk2', function (p) {
     p.vertex(middleWidth - 20, middleHeight + 90/2); // bottom left
     p.vertex(middleWidth + 500/2, middleHeight + 90/2); //bottom right
     p.endShape(p.CLOSE);
-    p.pop()
     
-    // "AFC" logo
-    p.textFont(mmaFont);
+    // "AFC" logo (my fake MMA promotion)
+    p.textFont(logoFont);
     p.textSize(80);
     p.fill(231, 189, 1);
     p.text("AFC", middleWidth - 150, middleHeight - 10);
 
     // 5 minute round ticker 
+    p.textFont(tickerFont);
+
+    p.push();
     const { mm, ss } = msToMMSS(roundTimeMs - timeElapsed);
-    p.textSize(80);
-    p.textFont('Trebuchet MS');
+    p.textSize(70);
     p.fill(238, 238, 238);
-    //p.textStyle(p.BOLD)
-    p.text(mm + ":" + ss, middleWidth + 120, middleHeight + 5);
+    p.text(mm + ":" + ss, middleWidth + 120, middleHeight - 8 );
+    p.pop();
+
+    //STEP 2. left and right rectangles with fighter info-----------------
+
+    p.noStroke();
+    p.fill(37, 37, 37, 200);
+    p.rectMode(p.CENTER);
+
+    p.rect(middleWidth - 500, middleHeight, 500, 90);
+    p.rect(middleWidth + 500, middleHeight, 500, 90);
+    p.fill(238, 238, 238);
+    p.textSize(50);
+    p.text(fighter1Surname, middleWidth - 500, middleHeight - 5);
+    p.text(fighter2Surname, middleWidth + 500, middleHeight - 5)
+      //step 2a. Add fight descriptor at bottom of ticker while we're at it
+    p.fill(37, 37, 37, 150)
+    p.rect(middleWidth, middleHeight + 80, 500, 30)
+    p.textSize(25);
+    p.fill(250);
+    p.text(fightTitle, middleWidth, middleHeight + 77)
+
+    //STEP 3. Bars that fill up per round (the hard part)----------------
+    
+
+    
   };
+
+  //Styling functions
 
   function msToMMSS(ms) {
     const total = p.max(0, p.round(ms / 1000));
