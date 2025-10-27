@@ -60,7 +60,7 @@ registerSketch('sk2', function (p) {
     // 5 minute round ticker 
     const { mm, ss } = msToMMSS(roundTimeMs - timeElapsed);
     p.textSize(80);
-    p.textFont('monospace');
+    p.textFont('Trebuchet MS');
     p.fill(238, 238, 238);
     //p.textStyle(p.BOLD)
     p.text(mm + ":" + ss, middleWidth + 120, middleHeight + 5);
