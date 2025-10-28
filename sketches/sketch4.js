@@ -25,7 +25,15 @@ registerSketch('sk4', function (p) {
 
     //rgba(39, 39, 39, 1)
     //STEP 1. draw overlay rectangle -------------------
-    p.fill(58, 58, 58);
+    let gradient = p.drawingContext.createLinearGradient(
+      middleWidth, middleHeight,
+      barWidth, barHeight  
+    );
+    gradient.addColorStop(0, 'rgb(58, 58, 58)')
+    gradient.addColorStop(1, 'rgba(99, 99, 99, 1)');
+    p.drawingContext.fillStyle = gradient;
+
+    //p.fill(58, 58, 58);
     p.noStroke();
 
     p.rectMode(p.CENTER);
