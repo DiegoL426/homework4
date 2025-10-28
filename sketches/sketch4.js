@@ -1,6 +1,27 @@
 // Instance-mode sketch for tab 4
 registerSketch('sk4', function (p) {
 
+  //SAMPLE DATA
+  const data = [
+    {
+      league: 'NBA',
+      team1: 'Mavericks',
+      team2: 'Spurs',
+      timeAndPlace: '12:00 PM PT @ DAL',
+      storyText: 'NBA opening day game, first pro start for Cooper Flagg. Victor Wembenyama to make a statement?'
+    },
+    {
+      league: 'NFL',
+      team1: 'Jets',
+      team2: 'Packers',
+      timeAndPlace: '12:00 PM PT @ GB',
+      storyText: 'Jets still winless on the season, going "defeated" a real possibility'
+    }
+  ]
+
+  let timePerStoryMs = 5000;
+  let currentIndex = 0;
+
   p.preload = function() {
     huskyLogo = p.loadImage('custom_images/white_husky_logo.png');
   }
@@ -10,6 +31,15 @@ registerSketch('sk4', function (p) {
     p.createCanvas(p.windowWidth, p.windowHeight);
   };
   p.draw = function () {
+    let elapsedTime = p.millis();
+
+    if (elapsedTime >= timePerStoryMs){
+      if (data[currentIndex + 1] != null){
+        timePerStoryMs += timePerStoryMs;
+        currentIndex++;
+      } 
+    }
+
     p.background(190);
 
     p.textAlign(p.CENTER, p.CENTER); // center align all text
@@ -21,8 +51,6 @@ registerSketch('sk4', function (p) {
     const barWidth = 1500;
     const barHeight = 100;
 
-    
-
     //rgba(39, 39, 39, 1)
     //STEP 1. draw overlay rectangle -------------------
     let gradient = p.drawingContext.createLinearGradient(
@@ -33,7 +61,6 @@ registerSketch('sk4', function (p) {
     gradient.addColorStop(1, 'rgba(99, 99, 99, 1)');
     p.drawingContext.fillStyle = gradient;
 
-    //p.fill(58, 58, 58);
     p.noStroke();
 
     p.rectMode(p.CENTER);
@@ -56,6 +83,8 @@ registerSketch('sk4', function (p) {
     p.text("REPORT", middleWidth - 530, middleHeight + 20);
     p.pop();
 
+    let currentStory = data[currentIndex];
+
     //Sport type subsection
     p.fill(235);
     p.stroke(240);
@@ -64,22 +93,22 @@ registerSketch('sk4', function (p) {
     p.line(middleWidth - 250, middleHeight - 45, middleWidth - 250, middleHeight + 45);
     p.textSize(40);
     p.noStroke();
-    p.text("NBA", middleWidth - 350, middleHeight + 5);
+    p.text(currentStory.league, middleWidth - 350, middleHeight + 5);
 
     //Matchup
     p.textSize(50);
-    p.text("Mavericks" + " vs. " + "Spurs", middleWidth - 5, middleHeight - 10);
+    p.text(currentStory.team1 + " vs. " + currentStory.team2, middleWidth - 5, middleHeight - 10);
 
     //Time and place
     p.textSize(30);
     p.fill(220);
-    p.text("12:00 PM PT" + " @ " + "DAL", middleWidth + 380, middleHeight - 10);
+    p.text(currentStory.timeAndPlace, middleWidth + 380, middleHeight - 10);
     //Story
     p.push()
     p.textAlign(p.LEFT);
     p.textSize(18);
     p.textStyle(p.ITALIC);
-    p.text("NBA opening day game, first pro start for Cooper Flagg. Victor Wembenyama to make a statement?", middleWidth - 230, middleHeight + 30);
+    p.text(currentStory.storyText, middleWidth - 230, middleHeight + 30);
     p.pop();
 
   };
