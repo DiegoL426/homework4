@@ -3,21 +3,75 @@ registerSketch('sk4', function (p) {
 
   //SAMPLE DATA
   const data = [
-    {
-      league: 'NBA',
-      team1: 'Mavericks',
-      team2: 'Spurs',
-      timeAndPlace: '12:00 PM PT @ DAL',
-      storyText: 'NBA opening day game, first pro start for Cooper Flagg. Victor Wembenyama to make a statement?'
-    },
-    {
-      league: 'NFL',
-      team1: 'Jets',
-      team2: 'Packers',
-      timeAndPlace: '12:00 PM PT @ GB',
-      storyText: 'Jets still winless on the season, going "defeated" a real possibility'
-    }
-  ]
+  // NBA
+  {
+    league: 'NBA',
+    team1: 'Lakers',
+    team2: 'Warriors',
+    timeAndPlace: '7:00 PM PT @ LA',
+    storyText: 'LeBron James leads the Lakers into a heated matchup against the Warriors.'
+  },
+  {
+    league: 'NBA',
+    team1: 'Celtics',
+    team2: 'Bulls',
+    timeAndPlace: '8:30 PM ET @ BOS',
+    storyText: 'Jayson Tatum looks to carry the Celtics against Chicago’s defense.'
+  },
+  {
+    league: 'NBA',
+    team1: 'Knicks',
+    team2: 'Nets',
+    timeAndPlace: '9:00 PM ET @ NY',
+    storyText: 'Historic rivalry heats up as the Knicks host the Nets in Madison Square Garden.'
+  },
+
+  // NFL
+  {
+    league: 'NFL',
+    team1: 'Packers',
+    team2: 'Bears',
+    timeAndPlace: '1:00 PM CT @ GB',
+    storyText: 'Green Bay battles Chicago in one of the league’s oldest rivalries.'
+  },
+  {
+    league: 'NFL',
+    team1: 'Cowboys',
+    team2: 'Eagles',
+    timeAndPlace: '4:25 PM ET @ DAL',
+    storyText: 'The Cowboys and Eagles clash in a showdown with playoff implications.'
+  },
+  {
+    league: 'NFL',
+    team1: 'Jets',
+    team2: 'Patriots',
+    timeAndPlace: '8:20 PM ET @ NYJ',
+    storyText: 'Jets try to break their losing streak against the Patriots tonight.'
+  },
+
+  // MLB
+  {
+    league: 'MLB',
+    team1: 'Yankees',
+    team2: 'Red Sox',
+    timeAndPlace: '7:05 PM ET @ NY',
+    storyText: 'Yankees and Red Sox meet in a heated AL East matchup.'
+  },
+  {
+    league: 'MLB',
+    team1: 'Dodgers',
+    team2: 'Giants',
+    timeAndPlace: '9:10 PM PT @ LA',
+    storyText: 'Dodgers face off against the Giants in one of baseball’s fiercest rivalries.'
+  },
+  {
+    league: 'MLB',
+    team1: 'Cubs',
+    team2: 'Cardinals',
+    timeAndPlace: '7:15 PM CT @ CHC',
+    storyText: 'Cubs host the Cardinals in a classic NL Central showdown.'
+  }
+];
 
   let timePerStoryMs = 5000;
   const timePerStoryStandard = timePerStoryMs;
@@ -25,6 +79,7 @@ registerSketch('sk4', function (p) {
   let currentIndex = 0;
 
   let alpha = 255;
+  let leagueAlpha = 255;
 
   p.preload = function() {
     huskyLogo = p.loadImage('custom_images/white_husky_logo.png');
@@ -51,8 +106,18 @@ registerSketch('sk4', function (p) {
 
     // fade logic: fades alpha levels in and out proportional to how far storyElapsed is from fadeMs.
     if (storyElapsed < fadeMs){
+      if (currentIndex == 0 || data[currentIndex].league != data[currentIndex - 1].league){
+        leagueAlpha = p.map(storyElapsed, 0, fadeMs, 0, 255);
+      } else {
+        leagueAlpha = 255;
+      }
       alpha = p.map(storyElapsed, 0, fadeMs, 0, 255);
     } else if (storyElapsed > timePerStoryStandard - fadeMs){
+      if (data.length <= currentIndex + 1 || data[currentIndex].league != data[currentIndex + 1].league){
+        leagueAlpha = p.map(storyElapsed, timePerStoryStandard - fadeMs,  timePerStoryStandard, 255, 0);
+      } else {
+        leagueAlpha = 255;
+      }
       alpha = p.map(storyElapsed, timePerStoryStandard - fadeMs,  timePerStoryStandard, 255, 0);
     } else {
       alpha = 255;
@@ -111,10 +176,13 @@ registerSketch('sk4', function (p) {
     p.strokeWeight(2);
     p.strokeCap(p.SQUARE);
     p.line(middleWidth - 250, middleHeight - 45, middleWidth - 250, middleHeight + 45);
-    p.textSize(40);
+    p.textSize(45);
     p.noStroke();
+    p.push();
+    p.fill(235, 235, 235, leagueAlpha);
     p.text(currentStory.league, middleWidth - 350, middleHeight + 3);
-
+    p.pop();
+    
     p.textAlign(p.LEFT);
     //Matchup
     p.textSize(50);
