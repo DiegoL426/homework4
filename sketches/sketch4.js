@@ -9,21 +9,21 @@ registerSketch('sk4', function (p) {
     team1: 'Lakers',
     team2: 'Warriors',
     timeAndPlace: '7:00 PM PT @ LA',
-    storyText: 'LeBron James leads the Lakers into a heated matchup against the Warriors.'
+    storyText: 'LeBron James leads the Lakers into a high-profile matchup with the Warriors in Los Angeles.'
   },
   {
     league: 'NBA',
     team1: 'Celtics',
-    team2: 'Bulls',
-    timeAndPlace: '8:30 PM ET @ BOS',
-    storyText: 'Jayson Tatum looks to carry the Celtics against Chicago’s defense.'
+    team2: 'Magic',
+    timeAndPlace: '4:30 PM PT @ BOS',
+    storyText: 'The Celtics look to extend their home win streak as they host the upstart Orlando Magic.'
   },
   {
     league: 'NBA',
-    team1: 'Knicks',
-    team2: 'Nets',
-    timeAndPlace: '9:00 PM ET @ NY',
-    storyText: 'Historic rivalry heats up as the Knicks host the Nets in Madison Square Garden.'
+    team1: 'Kings',
+    team2: 'Suns',
+    timeAndPlace: '7:30 PM PT @ SAC',
+    storyText: 'De’Aaron Fox and the Kings take on Kevin Durant’s Suns in a Western Conference battle.'
   },
 
   // NFL
@@ -31,47 +31,47 @@ registerSketch('sk4', function (p) {
     league: 'NFL',
     team1: 'Packers',
     team2: 'Bears',
-    timeAndPlace: '1:00 PM CT @ GB',
-    storyText: 'Green Bay battles Chicago in one of the league’s oldest rivalries.'
+    timeAndPlace: '10:00 AM PT @ GB',
+    storyText: 'Jordan Love and the Packers host Chicago in an early divisional matchup.'
+  },
+  {
+    league: 'NFL',
+    team1: 'Seahawks',
+    team2: 'Rams',
+    timeAndPlace: '1:25 PM PT @ SEA',
+    storyText: 'Seattle faces a tough NFC West test at home against the Rams.'
   },
   {
     league: 'NFL',
     team1: 'Cowboys',
-    team2: 'Eagles',
-    timeAndPlace: '4:25 PM ET @ DAL',
-    storyText: 'The Cowboys and Eagles clash in a showdown with playoff implications.'
-  },
-  {
-    league: 'NFL',
-    team1: 'Jets',
-    team2: 'Patriots',
-    timeAndPlace: '8:20 PM ET @ NYJ',
-    storyText: 'Jets try to break their losing streak against the Patriots tonight.'
+    team2: 'Chargers',
+    timeAndPlace: '5:20 PM PT @ LAC',
+    storyText: 'The Cowboys visit Los Angeles for a primetime duel with Justin Herbert and the Chargers.'
   },
 
   // MLB
   {
     league: 'MLB',
     team1: 'Yankees',
-    team2: 'Red Sox',
-    timeAndPlace: '7:05 PM ET @ NY',
-    storyText: 'Yankees and Red Sox meet in a heated AL East matchup.'
+    team2: 'Blue Jays',
+    timeAndPlace: '4:05 PM PT @ NY',
+    storyText: 'The Yankees open a key home series against Toronto as playoff races heat up.'
   },
   {
     league: 'MLB',
     team1: 'Dodgers',
-    team2: 'Giants',
-    timeAndPlace: '9:10 PM PT @ LA',
-    storyText: 'Dodgers face off against the Giants in one of baseball’s fiercest rivalries.'
+    team2: 'Rockies',
+    timeAndPlace: '7:10 PM PT @ LA',
+    storyText: 'Dodgers host the Rockies at Chavez Ravine looking to stay atop the NL West.'
   },
   {
     league: 'MLB',
-    team1: 'Cubs',
-    team2: 'Cardinals',
-    timeAndPlace: '7:15 PM CT @ CHC',
-    storyText: 'Cubs host the Cardinals in a classic NL Central showdown.'
+    team1: 'Astros',
+    team2: 'Mariners',
+    timeAndPlace: '6:40 PM PT @ SEA',
+    storyText: 'The Mariners meet the Astros in a crucial divisional matchup under the lights in Seattle.'
   }
-];
+  ];
 
   let timePerStoryMs = 5000;
   const timePerStoryStandard = timePerStoryMs;
