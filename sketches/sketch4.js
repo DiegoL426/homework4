@@ -13,7 +13,7 @@ registerSketch('sk4', function (p) {
     p.background(190);
 
     p.textAlign(p.CENTER, p.CENTER); // center align all text
-    p.textFont('arial');
+    p.textFont('Trebuchet MS');
     p.textStyle(p.NORMAL);
 
     const middleWidth = p.windowWidth/2;
@@ -54,10 +54,26 @@ registerSketch('sk4', function (p) {
     p.strokeWeight(2);
     p.strokeCap(p.SQUARE);
     p.line(middleWidth - 250, middleHeight - 45, middleWidth - 250, middleHeight + 45);
-    p.textSize(50);
+    p.textSize(40);
     p.noStroke();
-    p.text("NBA", middleWidth - 350, middleHeight);
-    p.text("NYG", middleWidth, middleHeight);
+    p.text("NBA", middleWidth - 350, middleHeight + 5);
+
+    //Matchup
+    p.textSize(50);
+    p.text("Mavericks" + " vs. " + "Spurs", middleWidth - 5, middleHeight - 10);
+
+    //Time and place
+    p.textSize(30);
+    p.fill(220);
+    p.text("12:00 PM PT" + " @ " + "DAL", middleWidth + 380, middleHeight - 10);
+    //Story
+    p.push()
+    p.textAlign(p.LEFT);
+    p.textSize(18);
+    p.textStyle(p.ITALIC);
+    p.text("NBA opening day game, first pro start for Cooper Flagg. Victor Wembenyama to make a statement?", middleWidth - 230, middleHeight + 30);
+    p.pop();
+
   };
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
 });
