@@ -8,14 +8,14 @@ registerSketch('sk4', function (p) {
     league: 'NBA',
     team1: 'Lakers',
     team2: 'Warriors',
-    timeAndPlace: '7:00 PM PT @ LA',
+    timeAndPlace: '4:00 PM PT @ LA',
     storyText: 'LeBron James leads the Lakers into a high-profile matchup with the Warriors in Los Angeles.'
   },
   {
     league: 'NBA',
     team1: 'Celtics',
     team2: 'Magic',
-    timeAndPlace: '4:30 PM PT @ BOS',
+    timeAndPlace: '7:00 PM PT @ BOS',
     storyText: 'The Celtics look to extend their home win streak as they host the upstart Orlando Magic.'
   },
   {
@@ -73,10 +73,11 @@ registerSketch('sk4', function (p) {
   }
   ];
 
-  let timePerStoryMs = 5000;
-  const timePerStoryStandard = timePerStoryMs;
-  let fadeMs = 1000;
-  let currentIndex = 0;
+
+  let timePerStoryMs = 5000; 
+  const timePerStoryStandard = timePerStoryMs; // Time each story appears
+  let fadeMs = 1000; //Fade in and fade out for this amount of ms
+  let currentIndex = 0; // current index in the sample data
 
   let alpha = 255;
   let leagueAlpha = 255;
@@ -94,11 +95,12 @@ registerSketch('sk4', function (p) {
     let storyElapsed = elapsedTime % timePerStoryStandard;
 
 
+    // change stories after the set time per story is up
     if (elapsedTime >= timePerStoryMs){
       if (data[currentIndex + 1] != null){
         timePerStoryMs += timePerStoryStandard;
         currentIndex++;
-      } else {
+      } else { // loop back to the beginning when out of stories
         timePerStoryMs += timePerStoryStandard;
         currentIndex = 0;
       }
