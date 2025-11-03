@@ -67,6 +67,18 @@ registerSketch('sk5', function (p) {
     fieldsData = p.loadTable('data_sets/homework5/JustinFields.csv', 'csv', 'header');
     genoData = p.loadTable('data_sets/homework5/GenoSmith.csv', 'csv', 'header');
     dartData = p.loadTable('data_sets/homework5/JaxsonDart.csv', 'csv', 'header');
+
+    //images
+    russSeaImg = p.loadImage('custom_images/RussSEA.png');
+    russNygImg = p.loadImage('custom_images/russNYG.png');
+    russDenImg = p.loadImage('custom_images/RussDEN.png');
+    russPitImg = p.loadImage('custom_images/russPIT.png');
+
+    genoImg = p.loadImage('custom_images/genoSmith.png');
+    dartImg = p.loadImage('custom_images/jaxsonDart.png');
+    fieldsImg = p.loadImage('custom_images/justinFields.png');
+    nixImg = p.loadImage('custom_images/BoNix.png');
+
   }
 
   p.setup = function () {
