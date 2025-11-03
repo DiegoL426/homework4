@@ -11,32 +11,50 @@ registerSketch('sk5', function (p) {
       russText: "Wilson left the Seahawks after 2021",
       russType: "R. Wilson (2021)",
       otherType: "G. Smith (2022)",
-      otherText: "Geno Smith became the started in Seattle in 2022"
+      otherText: "Geno Smith became the starting Seattle QB in 2022"
     },
     {
       team:"Broncos",
       background: 'rgb(0, 34, 68)',
-      secondaryColor: 'rgb(251, 79, 20)'
+      secondaryColor: 'rgb(251, 79, 20)',
+      russText: "Wilson left the Broncos after 2023",
+      russType: "R. Wilson (2023)",
+      otherType: "B. Nix (2024)",
+      otherText: "Bo Nix was drafted by Denver in 2024"
     },
     {
       team:"Steelers",
       background: 'rgb(16, 16, 16)',
-      secondaryColor: 'rgb(255, 182, 18)'
+      secondaryColor: 'rgb(255, 182, 18)',
+      russText: "Wilson did not start the first few games of 2024-2025 due to an injury",
+      russType: "R. Wilson (2024)",
+      otherType: "J. Fields (2024)",
+      otherText: "Justin Fields played the first 6 games for Pittsburgh over Wilson"
     },
     {
       team:"Giants",
       background: 'rgb(1, 35, 82)',
-      secondaryColor: 'rgb(163, 13, 45)'
+      secondaryColor: 'rgb(163, 13, 45)',
+      russText: "Wilson was benched by the Giants after 3 straight losses",
+      russType: "R. Wilson (2025)",
+      otherType: "J. Dart (2025)",
+      otherText: "Jaxson Dart replaced Wilson as the starting NY QB this season"
     }
   ]
 
-  const currentTeam = "Seahawks"; // current team selected 
-  const russDataRow = 9;
-  const otherDataRow = 10;
+  let currentTeam = "Seahawks"; // current team selected 
+  let russDataRow = 9;
+  let otherDataRow = 10;
 
   //russ SEA: 9
+  //russ DEN: 11
+  //russ PIT: 12
+  //russ NYG: 13
 
   //geno: 10
+  //bonix: 0
+  //fields: 3
+  //dart: 0
 
 
   p.preload = function () {
@@ -57,7 +75,7 @@ registerSketch('sk5', function (p) {
 
   p.draw = function () {
 
-
+    
     // Map to help get the relevant data for the current team selected
     let playerTeamMap = new Map();
     playerTeamMap.set("Seahawks", genoData);
@@ -123,6 +141,7 @@ registerSketch('sk5', function (p) {
     let otherTD = p.float(otherData.getString(otherDataRow, "TD"));
     let otherYdsPer = p.float(otherData.getString(otherDataRow, "Y/A"));
 
+    console.log("Other QBR:" + otherQBR);
     // ---------------- QBR ----------------
     let russWidth = p.map(russQBR, 0, 100, 0, maxBarLength); 
     let otherWidth = p.map(otherQBR, 0, 100, 0, maxBarLength);
@@ -196,23 +215,50 @@ registerSketch('sk5', function (p) {
     p.pop();
 
 
-    // STEP 4 Contextual text
+    // STEP 4. Contextual text---------------------------------------------------
     p.push()
-    p.textSize(38);
+    p.textSize(40);
+    p.textFont(boldFont);
     p.text("Russel Wilson's stats vs. every QB that has immediately replaced him.", middleWidth, middleHeight - 400);
 
 
-    let russType = teamColors.find(object => object.team === currentTeam).russType
-    let russText = teamColors.find(object => object.team === currentTeam).russText
-    p.textSize(80);
+    // STEP 4A. Grab text data depending on the team selected
+    let russType = teamColors.find(object => object.team === currentTeam).russType;
+    let russText = teamColors.find(object => object.team === currentTeam).russText;
+    let otherType = teamColors.find(object => object.team === currentTeam).otherType;
+    let otherText = teamColors.find(object => object.team === currentTeam).otherText;
+
+    let russGamesPlayed = russData.getString(russDataRow, "GS");
+    let otherGamesPlayed = otherData.getString(otherDataRow, "GS");
+    // Player names
+    p.textFont(boldFont);
+    p.textSize(70);
     p.textAlign(p.LEFT, p.CENTER);
-    p.text(russType, middleWidth - 900, middleHeight + 390);
-    p.textSize(40);
-
-    //p.text(teamColors.find())
+    p.text(russType, middleWidth - 700, middleHeight + 390);
     p.textAlign(p.RIGHT, p.CENTER);
-    p.text("G. Smith (2022)", middleWidth + 900, middleHeight + 390);
+    p.text(otherType, middleWidth + 700, middleHeight + 390);
 
+    //Supporting text
+    p.textSize(18);
+    p.text(otherText, middleWidth + 700, middleHeight + 330);
+    p.textAlign(p.LEFT, p.CENTER);
+    p.text(russText, middleWidth - 700, middleHeight + 330);
+
+    //Games played
+    p.textSize(25);
+    p.textAlign(p.LEFT);
+    p.textFont(normalFont);
+    p.text("Games Started:", middleWidth + 450, middleHeight - 300);
+    p.text("Games Started:", middleWidth - 600, middleHeight - 300)
+    p.textSize(50);
+    p.text(russGamesPlayed, middleWidth + 520, middleHeight - 250);
+    p.text(otherGamesPlayed, middleWidth - 530, middleHeight - 250);
+
+
+    p.stroke(255);
+    p.strokeWeight(3);
+    p.line(middleWidth + 450, middleHeight - 275, middleWidth + 635, middleHeight - 275);
+    p.line(middleWidth - 600, middleHeight - 275, middleWidth - 415, middleHeight - 275);
     p.pop();
 
   }
