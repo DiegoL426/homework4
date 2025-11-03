@@ -3,44 +3,7 @@ registerSketch('sk5', function (p) {
 
 
   // Color schemes based on the team that the user chooses
-  const teamColors = [
-    {
-      team:"Seahawks",
-      background: 'rgb(0, 34, 68)',
-      secondaryColor: 'rgb(105, 190, 40)',
-      russText: "Wilson left the Seahawks after 2021",
-      russType: "R. Wilson (2021)",
-      otherType: "G. Smith (2022)",
-      otherText: "Geno Smith became the starting Seattle QB in 2022"
-    },
-    {
-      team:"Broncos",
-      background: 'rgb(0, 34, 68)',
-      secondaryColor: 'rgb(251, 79, 20)',
-      russText: "Wilson left the Broncos after 2023",
-      russType: "R. Wilson (2023)",
-      otherType: "B. Nix (2024)",
-      otherText: "Bo Nix was drafted by Denver in 2024"
-    },
-    {
-      team:"Steelers",
-      background: 'rgb(16, 16, 16)',
-      secondaryColor: 'rgb(255, 182, 18)',
-      russText: "Wilson did not start the first few games of 2024-2025 due to an injury",
-      russType: "R. Wilson (2024)",
-      otherType: "J. Fields (2024)",
-      otherText: "Justin Fields played the first 6 games for Pittsburgh over Wilson"
-    },
-    {
-      team:"Giants",
-      background: 'rgb(1, 35, 82)',
-      secondaryColor: 'rgb(163, 13, 45)',
-      russText: "Wilson was benched by the Giants after 3 straight losses",
-      russType: "R. Wilson (2025)",
-      otherType: "J. Dart (2025)",
-      otherText: "Jaxson Dart replaced Wilson as the starting NY QB this season"
-    }
-  ]
+  
 
   let currentTeam = "Seahawks"; // current team selected 
   let russDataRow = 9;
@@ -87,7 +50,8 @@ registerSketch('sk5', function (p) {
 
   p.draw = function () {
 
-    
+    const teamData = buildData();
+
     // Map to help get the relevant data for the current team selected
     let playerTeamMap = new Map();
     playerTeamMap.set("Seahawks", genoData);
@@ -98,11 +62,21 @@ registerSketch('sk5', function (p) {
     const middleWidth = p.windowWidth/2;
     const middleHeight = p.windowHeight/2;
 
+    
+
     //STEP 1. Background Coloring------------------------
-    let mainColor = teamColors.find(object => object.team === currentTeam).background;
-    let secondaryColor = teamColors.find(object => object.team === currentTeam).secondaryColor;
-    //sets background and stroke colors to whatever the currently selected team is in teamColors
+    let mainColor = teamData.find(object => object.team === currentTeam).background;
+    let secondaryColor = teamData.find(object => object.team === currentTeam).secondaryColor;
+    //sets background and stroke colors to whatever the currently selected team is in teamData
     p.background(mainColor); 
+
+    //STEP 1A. Player images
+    p.imageMode(p.CENTER);
+    p.tint(100, 100);
+    let russImg = teamData.find(object => object.team === currentTeam).russImg;
+    let otherImg = teamData.find(object => object.team === currentTeam).otherImg;
+    p.image(russImg, middleWidth - 530, middleHeight + 140);
+    p.image(otherImg, middleWidth + 530, middleHeight + 140);
 
     //STEP 2. Set divides between both players-------------------
 
@@ -153,7 +127,8 @@ registerSketch('sk5', function (p) {
     let otherTD = p.float(otherData.getString(otherDataRow, "TD"));
     let otherYdsPer = p.float(otherData.getString(otherDataRow, "Y/A"));
 
-    console.log("Other QBR:" + otherQBR);
+    //console.log("Other QBR:" + otherQBR); 
+
     // ---------------- QBR ----------------
     let russWidth = p.map(russQBR, 0, 100, 0, maxBarLength); 
     let otherWidth = p.map(otherQBR, 0, 100, 0, maxBarLength);
@@ -235,10 +210,10 @@ registerSketch('sk5', function (p) {
 
 
     // STEP 4A. Grab text data depending on the team selected
-    let russType = teamColors.find(object => object.team === currentTeam).russType;
-    let russText = teamColors.find(object => object.team === currentTeam).russText;
-    let otherType = teamColors.find(object => object.team === currentTeam).otherType;
-    let otherText = teamColors.find(object => object.team === currentTeam).otherText;
+    let russType = teamData.find(object => object.team === currentTeam).russType;
+    let russText = teamData.find(object => object.team === currentTeam).russText;
+    let otherType = teamData.find(object => object.team === currentTeam).otherType;
+    let otherText = teamData.find(object => object.team === currentTeam).otherText;
 
     let russGamesPlayed = russData.getString(russDataRow, "GS");
     let otherGamesPlayed = otherData.getString(otherDataRow, "GS");
@@ -252,9 +227,9 @@ registerSketch('sk5', function (p) {
 
     //Supporting text
     p.textSize(18);
-    p.text(otherText, middleWidth + 700, middleHeight + 330);
+    p.text(otherText, middleWidth + 700, middleHeight + 345);
     p.textAlign(p.LEFT, p.CENTER);
-    p.text(russText, middleWidth - 700, middleHeight + 330);
+    p.text(russText, middleWidth - 700, middleHeight + 345);
 
     //Games played
     p.textSize(25);
@@ -263,8 +238,8 @@ registerSketch('sk5', function (p) {
     p.text("Games Started:", middleWidth + 450, middleHeight - 300);
     p.text("Games Started:", middleWidth - 600, middleHeight - 300)
     p.textSize(50);
-    p.text(russGamesPlayed, middleWidth + 520, middleHeight - 250);
-    p.text(otherGamesPlayed, middleWidth - 530, middleHeight - 250);
+    p.text(otherGamesPlayed, middleWidth + 520, middleHeight - 250);
+    p.text(russGamesPlayed, middleWidth - 530, middleHeight - 250);
 
 
     p.stroke(255);
@@ -273,6 +248,63 @@ registerSketch('sk5', function (p) {
     p.line(middleWidth - 600, middleHeight - 275, middleWidth - 415, middleHeight - 275);
     p.pop();
 
+
+    // STEP 5. Player images and buttons ----------------------------------------
+
+    //p.tint()
+    
+
+  }
+
+  function buildData(){
+      const teamData = [
+      {
+        team:"Seahawks",
+        background: 'rgb(0, 34, 68)',
+        secondaryColor: 'rgb(105, 190, 40)',
+        russText: "Wilson left the Seahawks after 2021",
+        russType: "R. Wilson (2021)",
+        otherType: "G. Smith (2022)",
+        otherText: "Geno Smith became the starting Seattle QB in 2022",
+        russImg: russSeaImg,
+        otherImg: genoImg
+      },
+      {
+        team:"Broncos",
+        background: 'rgb(0, 34, 68)',
+        secondaryColor: 'rgb(251, 79, 20)',
+        russText: "Wilson left the Broncos after 2023",
+        russType: "R. Wilson (2023)",
+        otherType: "B. Nix (2024)",
+        otherText: "Bo Nix was drafted by Denver in 2024",
+        russImg: russDenImg,
+        otherImg: nixImg
+      },
+      {
+        team:"Steelers",
+        background: 'rgb(16, 16, 16)',
+        secondaryColor: 'rgb(255, 182, 18)',
+        russText: "Wilson did not start the first few games of 2024-2025 due to an injury",
+        russType: "R. Wilson (2024)",
+        otherType: "J. Fields (2024)",
+        otherText: "Justin Fields played the first 6 games for Pittsburgh over Wilson",
+        russImg: russPitImg,
+        otherImg: fieldsImg
+      },
+      {
+        team:"Giants",
+        background: 'rgb(1, 35, 82)',
+        secondaryColor: 'rgb(163, 13, 45)',
+        russText: "Wilson was benched by the Giants after 3 straight losses",
+        russType: "R. Wilson (2025)",
+        otherType: "J. Dart (2025)",
+        otherText: "Jaxson Dart replaced Wilson as the starting NY QB this season",
+        russImg: russNygImg,
+        otherImg: dartImg
+      }
+    ]
+
+    return teamData;
   }
 
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
