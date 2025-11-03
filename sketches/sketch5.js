@@ -1,29 +1,21 @@
-// Example 2
 registerSketch('sk5', function (p) {
 
-
-  // Color schemes based on the team that the user chooses
-  
-
   let currentTeam = "Seahawks"; // current team selected 
-  let russDataRow = 9;
-  let otherDataRow = 10;
-
-  let size1 = 100;
-  let size2 = 80;
-
-  let buttons = [];
-
+  let russDataRow = 9; // row in csv for Russell Wilson
+  let otherDataRow = 10; // row in csv for other player
   //russ SEA: 9
   //russ DEN: 11
   //russ PIT: 12
   //russ NYG: 13
-
   //geno: 10
   //bonix: 0
   //fields: 3
   //dart: 0
 
+  let size1 = 100; // seahawks and broncos logo sizes
+  let size2 = 80; // steelers and giants logo sizes
+
+  let buttons = []; // buttons array fully built in setup function
 
   p.preload = function () {
     normalFont = p.loadFont('fonts/Tomorrow-Regular.ttf');
@@ -63,8 +55,7 @@ registerSketch('sk5', function (p) {
 
   p.draw = function () {
 
-    // Map to help get the relevant data for the current team selected
-    let playerTeamMap = new Map();
+    let playerTeamMap = new Map(); // Map to help get the relevant data for the current team selected
     playerTeamMap.set("Seahawks", genoData);
     playerTeamMap.set("Broncos", nixData);
     playerTeamMap.set("Steelers", fieldsData);
@@ -73,9 +64,7 @@ registerSketch('sk5', function (p) {
     const middleWidth = p.windowWidth/2;
     const middleHeight = p.windowHeight/2;
 
-    const teamData = buildData();
-
-    
+    const teamData = buildData(); // contains data relating to vis color scheme, text displayed, images displayed, etc...
 
     //STEP 1. Background Coloring------------------------
     let mainColor = teamData.find(object => object.team === currentTeam).background;
@@ -139,8 +128,6 @@ registerSketch('sk5', function (p) {
     let otherComp = p.float(otherData.getString(otherDataRow, "Cmp%"));
     let otherTD = p.float(otherData.getString(otherDataRow, "TD"));
     let otherYdsPer = p.float(otherData.getString(otherDataRow, "Y/A"));
-
-    //console.log("Other QBR:" + otherQBR); 
 
     // ---------------- QBR ----------------
     let russWidth = p.map(russQBR, 0, 100, 0, maxBarLength); 
@@ -214,7 +201,6 @@ registerSketch('sk5', function (p) {
     p.text(russYdsPer, middleWidth - 120, middleHeight + 255);
     p.pop();
 
-
     // STEP 4. Contextual text---------------------------------------------------
     p.push()
     p.textSize(40);
@@ -262,7 +248,7 @@ registerSketch('sk5', function (p) {
     p.pop();
 
 
-    // STEP 5. Buttons
+    // STEP 5. Buttons-------------------------------
 
     p.noTint();
     seahawksImg.resize(100, 100);
@@ -291,6 +277,7 @@ registerSketch('sk5', function (p) {
     p.image(giantsImg, middleWidth + 300, middleHeight - 330);
     p.noTint();
     
+    // STEP 6. Go to bed. ------------------------------------------
 
   }
 
@@ -346,6 +333,7 @@ registerSketch('sk5', function (p) {
   }
 
   function buildButtons (middleWidth, middleHeight){
+    //CREDIT: AI gave me the idea for the buttons array as shown here to be used in the mousePressed function
     let buttons = [
       { team: "Seahawks", x: middleWidth - 300 - size1/2, y: middleHeight - 330 - size1/2, w: size1, h: size1, img: seahawksImg, russRow: 9, otherRow: 10 },
       { team: "Broncos",  x: middleWidth - 150 - size1/2, y: middleHeight - 330 - size1/2, w: size1, h: size1, img: broncosImg, russRow: 11, otherRow: 0  },
