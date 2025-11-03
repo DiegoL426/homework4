@@ -9,6 +9,11 @@ registerSketch('sk5', function (p) {
   let russDataRow = 9;
   let otherDataRow = 10;
 
+  let size1 = 100;
+  let size2 = 80;
+
+  let buttons = [];
+
   //russ SEA: 9
   //russ DEN: 11
   //russ PIT: 12
@@ -42,15 +47,21 @@ registerSketch('sk5', function (p) {
     fieldsImg = p.loadImage('custom_images/justinFields.png');
     nixImg = p.loadImage('custom_images/BoNix.png');
 
+    seahawksImg = p.loadImage('custom_images/seahawksImg.png');
+    steelersImg = p.loadImage('custom_images/steelersImg.png');
+    giantsImg = p.loadImage('custom_images/giantsImg.png');
+    broncosImg = p.loadImage('custom_images/broncosImg.png');
+
   }
 
   p.setup = function () {
+    const middleWidth = p.windowWidth/2;
+    const middleHeight = p.windowHeight/2;
     p.createCanvas(p.windowWidth, p.windowHeight);
+    buttons = buildButtons(middleWidth, middleHeight);
   };
 
   p.draw = function () {
-
-    const teamData = buildData();
 
     // Map to help get the relevant data for the current team selected
     let playerTeamMap = new Map();
@@ -62,6 +73,8 @@ registerSketch('sk5', function (p) {
     const middleWidth = p.windowWidth/2;
     const middleHeight = p.windowHeight/2;
 
+    const teamData = buildData();
+
     
 
     //STEP 1. Background Coloring------------------------
@@ -72,7 +85,7 @@ registerSketch('sk5', function (p) {
 
     //STEP 1A. Player images
     p.imageMode(p.CENTER);
-    p.tint(100, 100);
+    p.tint(130, 100);
     let russImg = teamData.find(object => object.team === currentTeam).russImg;
     let otherImg = teamData.find(object => object.team === currentTeam).otherImg;
     p.image(russImg, middleWidth - 530, middleHeight + 140);
@@ -249,9 +262,34 @@ registerSketch('sk5', function (p) {
     p.pop();
 
 
-    // STEP 5. Player images and buttons ----------------------------------------
+    // STEP 5. Buttons
 
-    //p.tint()
+    p.noTint();
+    seahawksImg.resize(100, 100);
+    broncosImg.resize(100, 100);
+    steelersImg.resize(80, 80);
+    giantsImg.resize(80, 80);
+
+    if (currentTeam != "Seahawks"){
+      p.tint(255, 100);
+    }
+    p.image(seahawksImg, middleWidth - 300, middleHeight - 330);
+    p.noTint();
+    if (currentTeam != "Broncos"){
+      p.tint(255, 100);
+    }
+    p.image(broncosImg, middleWidth - 150, middleHeight - 330);
+    p.noTint();
+    if (currentTeam != "Steelers"){
+      p.tint(255, 100);
+    }
+    p.image(steelersImg, middleWidth + 150, middleHeight - 330);
+    p.noTint();
+    if (currentTeam != "Giants"){
+      p.tint(255, 100);
+    }
+    p.image(giantsImg, middleWidth + 300, middleHeight - 330);
+    p.noTint();
     
 
   }
@@ -306,6 +344,30 @@ registerSketch('sk5', function (p) {
 
     return teamData;
   }
+
+  function buildButtons (middleWidth, middleHeight){
+    let buttons = [
+      { team: "Seahawks", x: middleWidth - 300 - size1/2, y: middleHeight - 330 - size1/2, w: size1, h: size1, img: seahawksImg, russRow: 9, otherRow: 10 },
+      { team: "Broncos",  x: middleWidth - 150 - size1/2, y: middleHeight - 330 - size1/2, w: size1, h: size1, img: broncosImg, russRow: 11, otherRow: 0  },
+      { team: "Steelers", x: middleWidth + 150 - size2/2, y: middleHeight - 330 - size2/2, w: size2, h: size2, img: steelersImg, russRow: 12, otherRow: 3 },
+      { team: "Giants",   x: middleWidth + 300 - size2/2, y: middleHeight - 330 - size2/2, w: size2, h: size2, img: giantsImg, russRow: 13, otherRow: 0  }
+    ];
+    return buttons;
+  }
+
+  p.mousePressed = function() {
+    for (let button of buttons){
+      if (p.mouseX >= button.x && p.mouseX <= button.x + button.w && p.mouseY >= button.y && p.mouseY <= button.y + button.h) {
+      currentTeam = button.team;
+      russDataRow = button.russRow;
+      otherDataRow = button.otherRow;
+      break;
+      }
+    }
+  }
+
+
+  
 
   p.windowResized = function () { p.resizeCanvas(p.windowWidth, p.windowHeight); };
 
