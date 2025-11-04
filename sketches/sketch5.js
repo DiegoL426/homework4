@@ -205,7 +205,7 @@ registerSketch('sk5', function (p) {
     p.push()
     p.textSize(40);
     p.textFont(boldFont);
-    p.text("Russel Wilson's stats vs. every QB that has immediately replaced him.", middleWidth, middleHeight - 400);
+    p.text("Russel Wilson's stats vs. every QB that has immediately replaced him.", middleWidth, middleHeight - 385);
 
 
     // STEP 4A. Grab text data depending on the team selected
@@ -220,15 +220,15 @@ registerSketch('sk5', function (p) {
     p.textFont(boldFont);
     p.textSize(70);
     p.textAlign(p.LEFT, p.CENTER);
-    p.text(russType, middleWidth - 700, middleHeight + 390);
+    p.text(russType, middleWidth - 700, middleHeight + 380);
     p.textAlign(p.RIGHT, p.CENTER);
-    p.text(otherType, middleWidth + 700, middleHeight + 390);
+    p.text(otherType, middleWidth + 700, middleHeight + 380);
 
     //Supporting text
     p.textSize(18);
-    p.text(otherText, middleWidth + 700, middleHeight + 345);
+    p.text(otherText, middleWidth + 700, middleHeight + 335);
     p.textAlign(p.LEFT, p.CENTER);
-    p.text(russText, middleWidth - 700, middleHeight + 345);
+    p.text(russText, middleWidth - 700, middleHeight + 335);
 
     //Games played
     p.textSize(25);
